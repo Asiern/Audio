@@ -21,7 +21,3 @@ jobs:
       - name: Build
         working-directory: ${{github.workspace}}/build
         run: make all
-
-      - name: Execute
-        working-directory: ${{github.workspace}}/build
-        run: ./audio
