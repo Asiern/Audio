@@ -1,3 +1,3 @@
 #!/bin/bash
-apt install -y gcc g++ gdb make cmake libwxgtk3.0-gtk3-dev
-mkdir build && cd build && cmake ..
+apt install -y gcc g++ gdb make cmake libwxgtk3.0-gtk3-dev libcurl4-openssl-dev
+mkdir build && cd build && cmake .. 

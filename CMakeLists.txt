@@ -9,11 +9,13 @@ set(
 )
 
 find_package(wxWidgets COMPONENTS core base xrc REQUIRED)
+find_package(CURL REQUIRED)
 
 include(${wxWidgets_USE_FILE})
 
 add_executable(${PROJECT_NAME} ${PROG_SRCS})
 
 target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES})
 
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
