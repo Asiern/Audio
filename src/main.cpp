@@ -5,7 +5,7 @@ IMPLEMENT_APP(MyApp)
 
 bool MyApp::OnInit()
 {
-  Audio *mainWindow = new Audio(wxT("Audio"), 640, 480);
+  Audio *mainWindow = new Audio();
   mainWindow->Show(true);
 
   return true;
