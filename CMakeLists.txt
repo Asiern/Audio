@@ -34,5 +34,13 @@ target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
 find_package(CURL REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES})
 
+###########     libass    ###########
+add_library(BASS SHARED IMPORTED)
+set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/x64/libbass.so)
+
+target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty)
+target_link_libraries(${PROJECT_NAME} BASS)
+
+
 
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
