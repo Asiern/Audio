@@ -22,7 +22,7 @@ Menu::Menu() : wxMenuBar()
 
 void Menu::onQuit(wxCommandEvent &evt)
 {
-    Close(true);
+    this->m_parent->Close(true);
 }
 
 void Menu::onAbout(wxCommandEvent &evt)
