@@ -7,10 +7,11 @@ set(
     PROG_SRCS
     src/main.cpp
     src/audio.cpp
+    src/updater.cpp
+    src/menu.cpp
 )
 
 add_executable(${PROJECT_NAME} ${PROG_SRCS})
-
 
 ########### NLohmann Json ###########
 
