@@ -1,0 +1,20 @@
+name: windows-CMake
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup
+        run: ${{github.workspace}}/scripts/WindowsSetup.bat
+
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build
