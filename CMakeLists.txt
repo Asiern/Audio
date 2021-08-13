@@ -29,10 +29,18 @@ endif()
 target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
 
 ###########   wxWidgets   ###########
-
-find_package(wxWidgets COMPONENTS core base xrc REQUIRED)
-include(${wxWidgets_USE_FILE})
-target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+if(WIN32)
+  set(WX_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/WX/include)
+  set(WX_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/thirdparty/WX/lib/vc14x_x64_dll)
+  find_package(wxWidgets 3.1 REQUIRED)
+  include_directories(${WX_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${WX_LIBRARY})
+  link_directories(${WX_LIBRARY_DIR})
+else()
+  find_package(wxWidgets COMPONENTS core base xrc REQUIRED)
+  include(${wxWidgets_USE_FILE})
+  target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+endif()
 
 ###########      CURL     ###########
 
