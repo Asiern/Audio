@@ -11,7 +11,12 @@ set(
     src/menu.cpp
 )
 
-add_executable(${PROJECT_NAME} ${PROG_SRCS})
+if(WIN32)
+  add_executable(${PROJECT_NAME} WIN32 ${PROG_SRCS})
+else()
+  add_executable(${PROJECT_NAME} ${PROG_SRCS})
+endif()
+
 
 ########### NLohmann Json ###########
 
@@ -31,15 +36,31 @@ target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
 
 ###########      CURL     ###########
 
-find_package(CURL REQUIRED)
-target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES})
+if(WIN32)
+  set(CURL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/CURL/include)
+  set(CURL_LIBRARY ${CMAKE_SOURCE_DIR}/thirdparty/CURL/lib/libcurl.a)
+  add_definitions(-DCURL_STATICLIB)
+  find_package(CURL REQUIRED)
+  include_directories(${CURL_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARY})
+else()
+  find_package(CURL REQUIRED)
+  target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES})
+endif()
 
-###########     libass    ###########
+
+###########      BASS     ###########
 add_library(BASS SHARED IMPORTED)
-set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/x64/libbass.so)
-
-target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty)
-target_link_libraries(${PROJECT_NAME} BASS)
+if(WIN32)
+  set(BASS_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/BASS/c)
+  set(BASS_LIBRARY ${CMAKE_SOURCE_DIR}/thirdparty/BASS/c/x64/bass.lib)
+  include_directories(${BASS_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${BASS_LIBRARY})
+else()
+  set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/x64/libbass.so)
+  target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty)
+  target_link_libraries(${PROJECT_NAME} BASS)
+endif()
 
 
 
