@@ -4,10 +4,7 @@
 
 #include "updater.h"
 #include "utils.h"
-// clang-format off
-wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) 
-wxEND_EVENT_TABLE()
-    // clang-format on
+wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
 
     Menu::Menu()
     : wxMenuBar()

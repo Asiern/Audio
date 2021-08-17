@@ -8,7 +8,7 @@ inline void openWebLink(std::string url)
     op = std::string("start ").append(url);
 #else
     op = std::string("xdg-open ").append(url);
-#endif;
+#endif
     system(op.c_str());
 }
 
