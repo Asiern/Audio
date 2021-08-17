@@ -5,16 +5,16 @@
 
 class Updater
 {
-public:
-	Updater(std::string url, struct curl_slist* headers);
-	~Updater();
-	std::string getLatestVersion();
-	int compareVersions(std::string v1, std::string v2);
+  public:
+    Updater(std::string url, struct curl_slist* headers);
+    ~Updater();
+    std::string getLatestVersion();
+    int compareVersions(std::string v1, std::string v2);
 
-private:
-	std::vector<std::string> split(const std::string& value);
-	std::string url;
-	struct curl_slist* headers;
+  private:
+    std::vector<std::string> split(const std::string& value);
+    std::string url;
+    struct curl_slist* headers;
 };
 
 #endif
