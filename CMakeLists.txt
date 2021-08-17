@@ -5,10 +5,15 @@ project(audio)
 
 set(
     PROG_SRCS
+    src/main.h
     src/main.cpp
+    src/audio.h
     src/audio.cpp
+    src/updater.h
     src/updater.cpp
+    src/menu.h
     src/menu.cpp
+    src/utils.h
 )
 
 if(WIN32)

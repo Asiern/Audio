@@ -1,22 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <wx/wx.h>
+#include "updater.h"
 
 class Audio : public wxFrame
 {
 
 protected:
-    wxMenuBar *menuBar = nullptr;
+	wxMenuBar *menuBar = nullptr;
 
-    wxButton *loadBtn = nullptr;
+	wxButton *loadBtn = nullptr;
 
-    //Events
-    void onloadBtnPress(wxCommandEvent &evt);
-    wxDECLARE_EVENT_TABLE();
+	//Events
+	void onloadBtnPress(wxCommandEvent &evt);
+	wxDECLARE_EVENT_TABLE();
 
 public:
-    Audio();
-    ~Audio();
+	Audio();
+	~Audio();
 };
 
 #endif
