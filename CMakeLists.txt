@@ -14,6 +14,8 @@ set(
     src/menu.h
     src/menu.cpp
     src/utils.h
+    src/controller.h
+    src/controller.cpp
 )
 
 if(WIN32)
@@ -95,11 +97,9 @@ if(WIN32)
   include_directories(${BASS_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${BASS_LIBRARY})
 else()
-  set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/x64/libbass.so)
-  target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty)
+  set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/BASS/x64/libbass.so)
+  target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty/BASS)
   target_link_libraries(${PROJECT_NAME} BASS)
 endif()
-
-
 
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
