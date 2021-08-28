@@ -102,4 +102,16 @@ else()
   target_link_libraries(${PROJECT_NAME} BASS)
 endif()
 
+###########     BASS FX   ###########
+
+add_library(BASS_FX SHARED IMPORTED)
+if(WIN32)
+  # TODO
+else()
+  set_target_properties(BASS_FX PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/BASS/x64/libbass_fx.so)
+  target_include_directories(BASS_FX INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty/BASS)
+  target_link_libraries(${PROJECT_NAME} BASS_FX)
+endif()
+
+
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
