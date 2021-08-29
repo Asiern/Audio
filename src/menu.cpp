@@ -24,11 +24,17 @@ wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
     file->Append(wxID_OPEN, wxT("&Open File(s)"));
     file->Append(wxID_EXIT, wxT("&Quit"));
     int ID_Check_for_Updates = wxNewId();
+    int ID_Documentation = wxNewId();
+    int ID_Release_Notes = wxNewId();
+    help->Append(ID_Documentation, wxT("&Documentation"));
+    help->Append(ID_Release_Notes, wxT("&Release Notes"));
     help->Append(ID_Check_for_Updates, wxT("&Check for Updates..."));
     help->Append(wxID_ABOUT, wxT("&About"));
     Append(file, wxT("&File"));
     Append(help, wxT("&Help"));
     Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onQuit));
+    Connect(ID_Release_Notes, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onReleaseNotes));
+    Connect(ID_Documentation, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onDocumentation));
     Connect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onAbout));
     Connect(ID_Check_for_Updates, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onCheckForUpdates));
 }
@@ -82,4 +88,24 @@ void Menu::onCheckForUpdates(wxCommandEvent& evt)
     }
     free(updater);
     free(headers);
+}
+
+/**
+ * @brief Open documentation event
+ * @param evt
+ * @return (void)
+ */
+void Menu::onDocumentation(wxCommandEvent& evt)
+{
+    openWebLink("https://github.com/Asiern/Audio");
+}
+
+/**
+ * @brief Open Release Notes event
+ * @param evt
+ * @return (void)
+ */
+void Menu::onReleaseNotes(wxCommandEvent& evt)
+{
+    openWebLink("https://github.com/Asiern/Audio/CHANGELOG.md");
 }

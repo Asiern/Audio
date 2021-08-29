@@ -28,6 +28,8 @@ class Menu : public wxMenuBar
     void onQuit(wxCommandEvent& evt);
     void onAbout(wxCommandEvent& evt);
     void onCheckForUpdates(wxCommandEvent& evt);
+    void onDocumentation(wxCommandEvent& evt);
+    void onReleaseNotes(wxCommandEvent& evt);
     wxDECLARE_EVENT_TABLE();
 
   public:
