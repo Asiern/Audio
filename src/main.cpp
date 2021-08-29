@@ -1,3 +1,13 @@
+/**
+ * @file main.cpp
+ * @author Asiern (https://github.com/Asiern)
+ * @brief Main class
+ * @date 2021-08-27
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "main.h"
 
 #include "audio.h"

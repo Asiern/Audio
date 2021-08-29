@@ -1,3 +1,13 @@
+/**
+ * @file menu.cpp
+ * @author Asiern (https://github.com/Asiern)
+ * @brief
+ * @date 2021-08-27
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "menu.h"
 
 #include <curl/curl.h>
@@ -23,16 +33,31 @@ wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
     Connect(ID_Check_for_Updates, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onCheckForUpdates));
 }
 
+/**
+ * @brief On quit event
+ * @param evt
+ * @return (void)
+ */
 void Menu::onQuit(wxCommandEvent& evt)
 {
     this->m_parent->Close(true);
 }
 
+/**
+ * @brief About event
+ * @param evt
+ * @return (void)
+ */
 void Menu::onAbout(wxCommandEvent& evt)
 {
     openWebLink(std::string("https://github.com/Asiern/Audio"));
 }
 
+/**
+ * @brief Check for updated event
+ * @param evt
+ * @return (void)
+ */
 void Menu::onCheckForUpdates(wxCommandEvent& evt)
 {
     // Request Headers

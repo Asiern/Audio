@@ -1,3 +1,13 @@
+/**
+ * @file updater.cpp
+ * @author Asiern (https://github.com/Asiern)
+ * @brief
+ * @date 2021-08-27
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "updater.h"
 #include "utils.h"
 #include <curl/curl.h>
@@ -12,6 +22,11 @@ enum CharType
     String
 };
 
+/**
+ * @brief Get char type
+ * @param c char
+ * @return char type from enum lst {Period | Number | String}
+ */
 CharType getCharType(char c)
 {
     if (c == '.')
@@ -29,17 +44,29 @@ std::size_t callback(const char* in, std::size_t size, std::size_t num, std::str
     return totalBytes;
 }
 
+/**
+ * @brief Constructor
+ * @param url Github repo url
+ * @param curl_slist Request header list
+ */
 Updater::Updater(std::string url, struct curl_slist* headers)
 {
     this->headers = headers;
     this->url = url;
 }
 
+/**
+ * @brief Destructor
+ */
 Updater::~Updater()
 {
     free(headers);
 }
 
+/**
+ * @brief Get GitHub latest release version code
+ * @return latest version code
+ */
 std::string Updater::getLatestVersion()
 {
     CURL* curl = curl_easy_init();
@@ -67,6 +94,12 @@ std::string Updater::getLatestVersion()
     return "";
 }
 
+/**
+ * @brief Compare 2 version codes
+ * @param v1 version code
+ * @param v2 version code
+ * @return 1 if v1>v2 | 0 if v1<= v2 | -1
+ */
 int Updater::compareVersions(std::string v1, std::string v2)
 {
     const std::vector<std::string> v1list = split(v1);
@@ -111,6 +144,11 @@ int Updater::compareVersions(std::string v1, std::string v2)
     return -1;
 }
 
+/**
+ * @brief Split version code
+ * @param value version code
+ * @return splitted version code
+ */
 std::vector<std::string> Updater::split(const std::string& value)
 {
     std::vector<std::string> list;
