@@ -31,6 +31,8 @@ class AudioController
     int getStreamStatus(void);
     int IncreasePitch(void);
     int DecreasePitch(void);
+    int SetStreamSpeed(float speed);
+    float GetBpm(const std::string& path, double start, double end);
 
   private:
     int device;

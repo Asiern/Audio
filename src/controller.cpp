@@ -22,8 +22,13 @@ AudioController::AudioController(int device, int freq)
     this->freq = freq;
     this->ShowError = ShowError;
 
+    // BASS initialization
     if (!BASS_Init(device, freq, 0, 0, NULL))
         std::cout << "Error BASS_Init " << BASS_ErrorGetCode() << std::endl;
+
+    // BASS FX initialization
+    if (HIWORD(BASS_FX_GetVersion()) != BASSVERSION)
+        std::cout << "Incorrect BASS FX version loaded" << std::endl;
 }
 
 /**
@@ -46,7 +51,7 @@ int AudioController::PlayStream(const std::string& path)
         BASS_Init(device, freq, 0, 0, NULL);
 
     // Create File stream
-    streamHandle = BASS_StreamCreateFile(FALSE, &path, 0, 0, 0);
+    streamHandle = BASS_StreamCreateFile(FALSE, path.c_str(), 0, 0, 0);
     // Play stream on channel
     int channelPlay = BASS_ChannelPlay(streamHandle, FALSE);
 
@@ -119,9 +124,8 @@ int AudioController::getStreamStatus()
 int AudioController::IncreasePitch()
 {
     HFX handle = BASS_ChannelSetFX(this->streamHandle, BASS_FX_BFX_PITCHSHIFT, 0);
-    BASS_BFX_PITCHSHIFT params = {0.5, 0, 2048, 8, this->streamHandle};
-    // BOOL value = BASS_FXSetParameters(handle, params);
-    return 0;
+    BASS_BFX_PITCHSHIFT params = {0.8, 0, 2048, 8, this->streamHandle};
+    return BASS_FXSetParameters(handle, &params);
 }
 
 /**
@@ -130,4 +134,39 @@ int AudioController::IncreasePitch()
  */
 int AudioController::DecreasePitch()
 {
+    HFX handle = BASS_ChannelSetFX(this->streamHandle, BASS_FX_BFX_PITCHSHIFT, 0);
+    BASS_BFX_PITCHSHIFT params = {0.5, 0, 2048, 8, this->streamHandle};
+    return BASS_FXSetParameters(handle, &params);
+}
+
+/**
+ * @brief
+ * @param speed
+ * @return
+ */
+int AudioController::SetStreamSpeed(float speed)
+{
+    return 0;
+}
+
+// void CALLBACK GetBpmCallback(DWORD channel, float percent, void* user)
+// {
+//     std::cout << percent << std::endl;
+// }
+
+/**
+ * @brief Get bpm from file
+ * @param path File path
+ * @param start Start detecting position in seconds
+ * @param end End detecting position in seconds
+ * @return Beats per minute
+ */
+float AudioController::GetBpm(const std::string& path, double start, double end)
+{
+    // Create decoding stream
+    HSTREAM DecodingStream = BASS_StreamCreateFile(FALSE, path.c_str(), 0L, 0L, BASS_STREAM_DECODE);
+    // Get bpm from decoding stream
+    float val = BASS_FX_BPM_DecodeGet(DecodingStream, start, end, MAKELONG(29, 200), BASS_FX_FREESOURCE, NULL, NULL);
+    BASS_FX_BPM_Free(val); // Free mem
+    return val;
 }
