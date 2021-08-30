@@ -167,6 +167,6 @@ float AudioController::GetBpm(const std::string& path, double start, double end)
     HSTREAM DecodingStream = BASS_StreamCreateFile(FALSE, path.c_str(), 0L, 0L, BASS_STREAM_DECODE);
     // Get bpm from decoding stream
     float val = BASS_FX_BPM_DecodeGet(DecodingStream, start, end, MAKELONG(29, 200), BASS_FX_FREESOURCE, NULL, NULL);
-    BASS_FX_BPM_Free(val); // Free mem
+    BASS_FX_BPM_Free(DecodingStream); // Free mem
     return val;
 }
