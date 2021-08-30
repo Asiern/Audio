@@ -11,17 +11,19 @@
 ### Ubuntu
 
 ```
-git clone https://github.com/Asiern/Audio.git
-cd Audio
-./scripts/UbuntuSetup.sh
+# Configuring audio
+$ git clone https://github.com/Asiern/Audio.git
+$ cd Audio
+$ ./scripts/UbuntuSetup.sh
 ```
 
 ### Windows
 
 ```
-git clone https://github.com/Asiern/Audio.git
-cd Audio
-./scripts/WindowsSetup.bat
+# Configuring audio
+$ git clone https://github.com/Asiern/Audio.git
+$ cd Audio
+$ ./scripts/WindowsSetup.bat
 ```
 
 ## Building
@@ -29,8 +31,9 @@ cd Audio
 ### Ubuntu
 
 ```
-cd build
-make all
+# Building audio
+$ cd build
+$ make all
 ```
 
 ## Libraries
