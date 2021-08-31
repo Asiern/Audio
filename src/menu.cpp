@@ -97,7 +97,7 @@ void Menu::onCheckForUpdates(wxCommandEvent& evt)
  */
 void Menu::onDocumentation(wxCommandEvent& evt)
 {
-    openWebLink("https://github.com/Asiern/Audio");
+    openWebLink("https://asiern.github.io/Audio/");
 }
 
 /**
@@ -107,5 +107,5 @@ void Menu::onDocumentation(wxCommandEvent& evt)
  */
 void Menu::onReleaseNotes(wxCommandEvent& evt)
 {
-    openWebLink("https://github.com/Asiern/Audio/CHANGELOG.md");
+    openWebLink("https://github.com/Asiern/Audio/blob/master/CHANGELOG.md");
 }
