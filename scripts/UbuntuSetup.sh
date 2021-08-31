@@ -15,4 +15,4 @@ mv C/bass_fx.h ./bass_fx.h
 rm -rf C/
 rm bass_fx24-linux.zip
 
-cd .. && mkdir build && cd build && cmake .. 
+cd ../.. && mkdir build && cd build && cmake .. 
