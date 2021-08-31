@@ -58,8 +58,5 @@ dkms.conf
 # Thirdparty
 /thirdparty
 
-# Doxygen
-/docs
-
 # VSCode
 /.vscode
