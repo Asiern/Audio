@@ -1,4 +1,15 @@
+/**
+ * @file updater.cpp
+ * @author Asiern (https://github.com/Asiern)
+ * @brief
+ * @date 2021-08-27
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "updater.h"
+#include "utils.h"
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 
@@ -11,6 +22,11 @@ enum CharType
     String
 };
 
+/**
+ * @brief Get char type
+ * @param c char
+ * @return char type from enum lst {Period | Number | String}
+ */
 CharType getCharType(char c)
 {
     if (c == '.')
@@ -21,27 +37,39 @@ CharType getCharType(char c)
         return String;
 }
 
-std::size_t callback(const char *in, std::size_t size, std::size_t num, std::string *out)
+std::size_t callback(const char* in, std::size_t size, std::size_t num, std::string* out)
 {
     const std::size_t totalBytes(size * num);
     out->append(in, totalBytes);
     return totalBytes;
 }
 
-Updater::Updater(std::string url, struct curl_slist *headers)
+/**
+ * @brief Constructor
+ * @param url Github repo url
+ * @param curl_slist Request header list
+ */
+Updater::Updater(std::string url, struct curl_slist* headers)
 {
     this->headers = headers;
     this->url = url;
 }
 
+/**
+ * @brief Destructor
+ */
 Updater::~Updater()
 {
     free(headers);
 }
 
+/**
+ * @brief Get GitHub latest release version code
+ * @return latest version code
+ */
 std::string Updater::getLatestVersion()
 {
-    CURL *curl = curl_easy_init();
+    CURL* curl = curl_easy_init();
     if (curl)
     {
         long satusCode(0);
@@ -66,17 +94,23 @@ std::string Updater::getLatestVersion()
     return "";
 }
 
+/**
+ * @brief Compare 2 version codes
+ * @param v1 version code
+ * @param v2 version code
+ * @return 1 if v1>v2 | 0 if v1<= v2 | -1
+ */
 int Updater::compareVersions(std::string v1, std::string v2)
 {
     const std::vector<std::string> v1list = split(v1);
     const std::vector<std::string> v2list = split(v2);
 
-    const size_t n = std::min(v1list.size(), v2list.size());
+    const size_t n = min(v1list.size(), v2list.size());
 
     for (size_t i = 0; i < n; i++)
     {
-        const std::string &a = v1list[i];
-        const std::string &b = v2list[i];
+        const std::string& a = v1list[i];
+        const std::string& b = v2list[i];
         const CharType typeA = getCharType(a[0]);
         const CharType typeB = getCharType(b[0]);
         if (typeA == typeB)
@@ -110,7 +144,12 @@ int Updater::compareVersions(std::string v1, std::string v2)
     return -1;
 }
 
-std::vector<std::string> Updater::split(const std::string &value)
+/**
+ * @brief Split version code
+ * @param value version code
+ * @return splitted version code
+ */
+std::vector<std::string> Updater::split(const std::string& value)
 {
     std::vector<std::string> list;
 

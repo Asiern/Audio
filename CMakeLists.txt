@@ -5,10 +5,17 @@ project(audio)
 
 set(
     PROG_SRCS
+    src/main.h
     src/main.cpp
+    src/audio.h
     src/audio.cpp
+    src/updater.h
     src/updater.cpp
+    src/menu.h
     src/menu.cpp
+    src/utils.h
+    src/controller.h
+    src/controller.cpp
 )
 
 if(WIN32)
@@ -90,11 +97,21 @@ if(WIN32)
   include_directories(${BASS_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${BASS_LIBRARY})
 else()
-  set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/x64/libbass.so)
-  target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty)
+  set_target_properties(BASS PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/BASS/x64/libbass.so)
+  target_include_directories(BASS INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty/BASS)
   target_link_libraries(${PROJECT_NAME} BASS)
 endif()
 
+###########     BASS FX   ###########
+
+add_library(BASS_FX SHARED IMPORTED)
+if(WIN32)
+  # TODO
+else()
+  set_target_properties(BASS_FX PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/BASS/x64/libbass_fx.so)
+  target_include_directories(BASS_FX INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty/BASS)
+  target_link_libraries(${PROJECT_NAME} BASS_FX)
+endif()
 
 
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
