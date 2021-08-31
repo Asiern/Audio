@@ -118,25 +118,41 @@ int AudioController::getStreamStatus()
 }
 
 /**
- * @brief Increase channel pitch
- * @return
+ * @brief Private member to shift pitch
+ * @param value Semitones (0 won't change the pitch)
+ * @return If successful, TRUE is returned, else FALSE is returned
  */
-int AudioController::IncreasePitch()
+bool AudioController::_PitchShift(float value)
 {
     HFX handle = BASS_ChannelSetFX(this->streamHandle, BASS_FX_BFX_PITCHSHIFT, 0);
-    BASS_BFX_PITCHSHIFT params = {0.8, 0, 2048, 8, this->streamHandle};
+    BASS_BFX_PITCHSHIFT params = {0, value, 2048, 8, this->streamHandle};
     return BASS_FXSetParameters(handle, &params);
 }
 
 /**
- * @brief Decrease channel pitch
+ * @brief Increase stream channel pitch
+ * @param semitones number of semitones to increase (must be between [0..8])
  * @return
  */
-int AudioController::DecreasePitch()
+int AudioController::IncreasePitch(int semitones)
 {
-    HFX handle = BASS_ChannelSetFX(this->streamHandle, BASS_FX_BFX_PITCHSHIFT, 0);
-    BASS_BFX_PITCHSHIFT params = {0.5, 0, 2048, 8, this->streamHandle};
-    return BASS_FXSetParameters(handle, &params);
+    if (_PitchShift(semitones))
+        return 0;
+    else
+        return BASS_ErrorGetCode();
+}
+
+/**
+ * @brief Decrease  stream channel pitch
+ * @param semitones number of semitones to decrease (must be between [0..8])
+ * @return
+ */
+int AudioController::DecreasePitch(int semitones)
+{
+    if (_PitchShift(-semitones))
+        return 0;
+    else
+        return BASS_ErrorGetCode();
 }
 
 /**

@@ -29,8 +29,8 @@ class AudioController
     int ResumeStream(void);
     int StopStream(void);
     int getStreamStatus(void);
-    int IncreasePitch(void);
-    int DecreasePitch(void);
+    int IncreasePitch(int semitones);
+    int DecreasePitch(int semitones);
     int SetStreamSpeed(float speed);
     float GetBpm(const std::string& path, double start, double end);
 
@@ -39,5 +39,6 @@ class AudioController
     int freq;
     HSTREAM streamHandle;
     void* ShowError;
+    bool _PitchShift(float value);
 };
 #endif

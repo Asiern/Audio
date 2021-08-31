@@ -170,15 +170,19 @@ std::string Audio::getPath(const std::string& filename)
  */
 void Audio::onPitchIncrease(wxCommandEvent& evt)
 {
-    int selection = pitchcb->GetSelection();
-
-    if (selection == 0)
+    if (pitchcb->GetSelection() == 0)
         return;
 
     // Call controller
-    controller->IncreasePitch();
+    int error = controller->IncreasePitch(1);
 
-    // Change UI
+    if (error != 0)
+    {
+        wxMessageBox("error");
+        return;
+    }
+
+    // Update UI
     pitchcb->SetSelection(pitchcb->GetSelection() - 1);
 }
 
@@ -189,14 +193,18 @@ void Audio::onPitchIncrease(wxCommandEvent& evt)
  */
 void Audio::onPitchDecrease(wxCommandEvent& evt)
 {
-    int selection = pitchcb->GetSelection();
-
-    if (selection == pitchChoices->size() - 1)
+    if (pitchcb->GetSelection() == pitchChoices->size() - 1)
         return;
 
     // Call controller
-    // controller
+    int error = controller->DecreasePitch(1);
 
-    // Change UI
+    if (error != 0)
+    {
+        wxMessageBox("" + error, "Error Dialog", wxOK, this, 0, 0);
+        return;
+    }
+
+    // Update UI
     pitchcb->SetSelection(pitchcb->GetSelection() + 1);
 }
