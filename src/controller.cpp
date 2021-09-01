@@ -42,7 +42,7 @@ AudioController::~AudioController()
 /**
  * @brief Play audio file
  * @param path file path
- * @return
+ * @return If no error occurred 0 is returned, else -1 is returned
  */
 int AudioController::PlayStream(const std::string& path)
 {
@@ -51,54 +51,42 @@ int AudioController::PlayStream(const std::string& path)
         BASS_Init(device, freq, 0, 0, NULL);
 
     // Create File stream
+    BASS_ChannelFree(streamHandle);
     streamHandle = BASS_StreamCreateFile(FALSE, path.c_str(), 0, 0, 0);
     // Play stream on channel
-    int channelPlay = BASS_ChannelPlay(streamHandle, FALSE);
-
-    // Error filter
-    switch (channelPlay)
-    {
-    case BASS_ERROR_HANDLE:
-        std::cout << "Error BASS_Init " << BASS_ErrorGetCode() << std::endl;
-        return streamHandle;
-        break;
-    case BASS_ERROR_START:
-        BASS_Start();
-        break;
-    case BASS_ERROR_DECODE:
-        std::cout << "Error BASS_Init " << BASS_ErrorGetCode() << std::endl;
-        break;
-    }
-
-    return 0;
+    if (BASS_ChannelPlay(streamHandle, FALSE))
+        return 0;
+    return -1;
 }
 
 /**
  * @brief Pause audio stream
- * @return
+ * @return If no error occurred 0 is returned, else -1 is returned
  */
 int AudioController::PauseStream()
 {
-    BASS_ChannelPause(this->streamHandle);
-    return 0;
+    if (BASS_Pause())
+        return 0;
+    return -1;
 }
 
 /**
  * @brief Resume audio stream
- * @return
+ * @return If no error occurred 0 is returned, else -1 is returned
  */
 int AudioController::ResumeStream()
 {
     if (BASS_ChannelIsActive(streamHandle))
     {
-        BASS_Start();
+        if (BASS_Start())
+            return 0;
     }
-    return 0;
+    return -1;
 }
 
 /**
  * @brief Stop audio stream
- * @return
+ * @return If no error occurred 0 is returned, else -1 is returned
  */
 int AudioController::StopStream()
 {
@@ -109,8 +97,23 @@ int AudioController::StopStream()
 }
 
 /**
- * @brief
+ * @brief Checks if a sample, stream, or MOD music is active (playing) or stalled. Can also check if a recording is in
+ * progress.
  * @return
+ *
+ * The return value is one of the following.
+ *
+ * BASS_ACTIVE_STOPPED	The channel is not active, or handle is not a valid channel.
+ *
+ * BASS_ACTIVE_PLAYING	The channel is playing (or recording).
+ *
+ * BASS_ACTIVE_PAUSED	The channel is paused.
+ *
+ * BASS_ACTIVE_PAUSED_DEVICE	The channel's device is paused.
+ *
+ * BASS_ACTIVE_STALLED	Playback of the stream has been stalled due to a lack of sample data.
+ *
+ * Playback will automatically resume once there is sufficient data to do so.
  */
 int AudioController::getStreamStatus()
 {
@@ -132,27 +135,27 @@ bool AudioController::_PitchShift(float value)
 /**
  * @brief Increase stream channel pitch
  * @param semitones number of semitones to increase (must be between [0..8])
- * @return
+ * @return If no error occurred 0 is returned, else -1 is returned
  */
 int AudioController::IncreasePitch(int semitones)
 {
     if (_PitchShift(semitones))
         return 0;
     else
-        return BASS_ErrorGetCode();
+        return -1;
 }
 
 /**
  * @brief Decrease  stream channel pitch
  * @param semitones number of semitones to decrease (must be between [0..8])
- * @return
+ * @return If no error occurred 0 is returned, else -1 is returned
  */
 int AudioController::DecreasePitch(int semitones)
 {
     if (_PitchShift(-semitones))
         return 0;
     else
-        return BASS_ErrorGetCode();
+        return -1;
 }
 
 /**
