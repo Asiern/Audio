@@ -88,12 +88,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae8f54deecb5f48511aaab469e80294d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudio.html#ae8f54deecb5f48511aaab469e80294d6">~Audio</a> ()</td></tr>
 <tr class="memdesc:ae8f54deecb5f48511aaab469e80294d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="classAudio.html#ae8f54deecb5f48511aaab469e80294d6">More...</a><br /></td></tr>
 <tr class="separator:ae8f54deecb5f48511aaab469e80294d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac12b80db433be5d25b40b20bc7346323"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudio.html#ac12b80db433be5d25b40b20bc7346323">loadFile</a> (const std::string &amp;path, BOOL clear)</td></tr>
+<tr class="memdesc:ac12b80db433be5d25b40b20bc7346323"><td class="mdescLeft">&#160;</td><td class="mdescRight">load filename and path to map  <a href="classAudio.html#ac12b80db433be5d25b40b20bc7346323">More...</a><br /></td></tr>
+<tr class="separator:ac12b80db433be5d25b40b20bc7346323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac67348ee291c1e0ad060b8d362111ead"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudio.html#ac67348ee291c1e0ad060b8d362111ead">onloadBtnPress</a> (wxCommandEvent &amp;evt)</td></tr>
-<tr class="memdesc:ac67348ee291c1e0ad060b8d362111ead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load file event.  <a href="classAudio.html#ac67348ee291c1e0ad060b8d362111ead">More...</a><br /></td></tr>
-<tr class="separator:ac67348ee291c1e0ad060b8d362111ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b86fe15da41c488a2da8b74fe78cc26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudio.html#a4b86fe15da41c488a2da8b74fe78cc26">onplayBtnPress</a> (wxCommandEvent &amp;evt)</td></tr>
 <tr class="memdesc:a4b86fe15da41c488a2da8b74fe78cc26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Play event.  <a href="classAudio.html#a4b86fe15da41c488a2da8b74fe78cc26">More...</a><br /></td></tr>
 <tr class="separator:a4b86fe15da41c488a2da8b74fe78cc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,34 +154,37 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac67348ee291c1e0ad060b8d362111ead" name="ac67348ee291c1e0ad060b8d362111ead"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac67348ee291c1e0ad060b8d362111ead">&#9670;&nbsp;</a></span>onloadBtnPress()</h2>
+<a id="ac12b80db433be5d25b40b20bc7346323" name="ac12b80db433be5d25b40b20bc7346323"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac12b80db433be5d25b40b20bc7346323">&#9670;&nbsp;</a></span>loadFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Audio::onloadBtnPress </td>
+          <td class="memname">void Audio::loadFile </td>
           <td>(</td>
-          <td class="paramtype">wxCommandEvent &amp;&#160;</td>
-          <td class="paramname"><em>evt</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">BOOL&#160;</td>
+          <td class="paramname"><em>clear</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Load file event. </p>
+<p>load filename and path to map </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">evt</td><td></td></tr>
+    <tr><td class="paramname">path</td><td>file path </td></tr>
+    <tr><td class="paramname">clear</td><td>if TRUE clear previous file data, if FALSE do nothing </td></tr>
   </table>
   </dd>
 </dl>

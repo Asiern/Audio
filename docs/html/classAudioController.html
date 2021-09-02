@@ -95,13 +95,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5f7ff0c7c79b8f5253bd4df8d3d35130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop audio stream.  <a href="classAudioController.html#a5f7ff0c7c79b8f5253bd4df8d3d35130">More...</a><br /></td></tr>
 <tr class="separator:a5f7ff0c7c79b8f5253bd4df8d3d35130"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa0433485d9dc07c3c32e3a38eaaf4a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#afa0433485d9dc07c3c32e3a38eaaf4a8">getStreamStatus</a> (void)</td></tr>
+<tr class="memdesc:afa0433485d9dc07c3c32e3a38eaaf4a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a sample, stream, or MOD music is active (playing) or stalled. Can also check if a recording is in progress.  <a href="classAudioController.html#afa0433485d9dc07c3c32e3a38eaaf4a8">More...</a><br /></td></tr>
 <tr class="separator:afa0433485d9dc07c3c32e3a38eaaf4a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addc81a33ec1897e5893b5b9a19577336"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#addc81a33ec1897e5893b5b9a19577336">IncreasePitch</a> (void)</td></tr>
-<tr class="memdesc:addc81a33ec1897e5893b5b9a19577336"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase channel pitch.  <a href="classAudioController.html#addc81a33ec1897e5893b5b9a19577336">More...</a><br /></td></tr>
-<tr class="separator:addc81a33ec1897e5893b5b9a19577336"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81738f5aea08ea8d633a69658a66997d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#a81738f5aea08ea8d633a69658a66997d">DecreasePitch</a> (void)</td></tr>
-<tr class="memdesc:a81738f5aea08ea8d633a69658a66997d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrease channel pitch.  <a href="classAudioController.html#a81738f5aea08ea8d633a69658a66997d">More...</a><br /></td></tr>
-<tr class="separator:a81738f5aea08ea8d633a69658a66997d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1bfaa9b113f97bb263507a4df51ff99"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#ae1bfaa9b113f97bb263507a4df51ff99">IncreasePitch</a> (int semitones)</td></tr>
+<tr class="memdesc:ae1bfaa9b113f97bb263507a4df51ff99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase stream channel pitch.  <a href="classAudioController.html#ae1bfaa9b113f97bb263507a4df51ff99">More...</a><br /></td></tr>
+<tr class="separator:ae1bfaa9b113f97bb263507a4df51ff99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015cde1e0f1f24e5a3d64fccfce1bad2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#a015cde1e0f1f24e5a3d64fccfce1bad2">DecreasePitch</a> (int semitones)</td></tr>
+<tr class="memdesc:a015cde1e0f1f24e5a3d64fccfce1bad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrease stream channel pitch.  <a href="classAudioController.html#a015cde1e0f1f24e5a3d64fccfce1bad2">More...</a><br /></td></tr>
+<tr class="separator:a015cde1e0f1f24e5a3d64fccfce1bad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f0d89a74026f1d08d5fe48b63fa8efe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#a1f0d89a74026f1d08d5fe48b63fa8efe">SetStreamSpeed</a> (float speed)</td></tr>
 <tr class="separator:a1f0d89a74026f1d08d5fe48b63fa8efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85558e11baaa3e0ee055273166cbb0b5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAudioController.html#a85558e11baaa3e0ee055273166cbb0b5">GetBpm</a> (const std::string &amp;path, double start, double end)</td></tr>
@@ -170,8 +171,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a81738f5aea08ea8d633a69658a66997d" name="a81738f5aea08ea8d633a69658a66997d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81738f5aea08ea8d633a69658a66997d">&#9670;&nbsp;</a></span>DecreasePitch()</h2>
+<a id="a015cde1e0f1f24e5a3d64fccfce1bad2" name="a015cde1e0f1f24e5a3d64fccfce1bad2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a015cde1e0f1f24e5a3d64fccfce1bad2">&#9670;&nbsp;</a></span>DecreasePitch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,15 +180,21 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">int AudioController::DecreasePitch </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>semitones</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decrease channel pitch. </p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Decrease stream channel pitch. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">semitones</td><td>number of semitones to decrease (must be between [0..8]) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If no error occurred 0 is returned, else -1 is returned </dd></dl>
 
 </div>
 </div>
@@ -251,12 +258,21 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Checks if a sample, stream, or MOD music is active (playing) or stalled. Can also check if a recording is in progress. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>The return value is one of the following.</p>
+<p >BASS_ACTIVE_STOPPED The channel is not active, or handle is not a valid channel.</p>
+<p >BASS_ACTIVE_PLAYING The channel is playing (or recording).</p>
+<p >BASS_ACTIVE_PAUSED The channel is paused.</p>
+<p >BASS_ACTIVE_PAUSED_DEVICE The channel's device is paused.</p>
+<p >BASS_ACTIVE_STALLED Playback of the stream has been stalled due to a lack of sample data.</p>
+<p >Playback will automatically resume once there is sufficient data to do so. </p>
 
 </div>
 </div>
-<a id="addc81a33ec1897e5893b5b9a19577336" name="addc81a33ec1897e5893b5b9a19577336"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addc81a33ec1897e5893b5b9a19577336">&#9670;&nbsp;</a></span>IncreasePitch()</h2>
+<a id="ae1bfaa9b113f97bb263507a4df51ff99" name="ae1bfaa9b113f97bb263507a4df51ff99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1bfaa9b113f97bb263507a4df51ff99">&#9670;&nbsp;</a></span>IncreasePitch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,15 +280,21 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">int AudioController::IncreasePitch </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>semitones</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Increase channel pitch. </p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Increase stream channel pitch. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">semitones</td><td>number of semitones to increase (must be between [0..8]) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If no error occurred 0 is returned, else -1 is returned </dd></dl>
 
 </div>
 </div>
@@ -293,7 +315,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pause audio stream. </p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If no error occurred 0 is returned, else -1 is returned </dd></dl>
 
 </div>
 </div>
@@ -320,7 +342,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If no error occurred 0 is returned, else -1 is returned </dd></dl>
 
 </div>
 </div>
@@ -341,7 +363,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Resume audio stream. </p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If no error occurred 0 is returned, else -1 is returned </dd></dl>
 
 </div>
 </div>
@@ -387,7 +409,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stop audio stream. </p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If no error occurred 0 is returned, else -1 is returned </dd></dl>
 
 </div>
 </div>
