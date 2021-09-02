@@ -117,7 +117,7 @@ void Menu::onAbout(wxCommandEvent& WXUNUSED(evt))
     info.SetLicence(_("MIT"));
 
     // Show About
-    wxAboutBox(info);
+    wxAboutBox(info, this);
 }
 
 /**
