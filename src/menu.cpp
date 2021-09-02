@@ -58,7 +58,7 @@ Menu::~Menu()
  */
 void Menu::onOpenFile(wxCommandEvent& WXUNUSED(evt))
 {
-    wxFileDialog openFileDialog(this, _("Open audio file"), "", "", "mp3 files (*.mp3)|*.mp3",
+    wxFileDialog openFileDialog(this, _("Open audio file"), "", "", "mp3 wav files (*.mp3;*.wav)|*.mp3;*.wav",
                                 wxFD_OPEN | wxFD_FILE_MUST_EXIST);
     if (openFileDialog.ShowModal() == wxID_CANCEL)
         return; // the user changed idea...
@@ -73,7 +73,7 @@ void Menu::onOpenFile(wxCommandEvent& WXUNUSED(evt))
  */
 void Menu::onOpenFiles(wxCommandEvent& WXUNUSED(evt))
 {
-    wxFileDialog openFileDialog(this, _("Open audio files"), "", "", "mp3 files (*.mp3)|*.mp3",
+    wxFileDialog openFileDialog(this, _("Open audio files"), "", "", "mp3 wav files (*.mp3;*.wav)|*.mp3;*.wav",
                                 wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
     if (openFileDialog.ShowModal() == wxID_CANCEL)
         return; // the user changed idea...
