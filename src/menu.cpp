@@ -16,22 +16,27 @@
 #include "utils.h"
 wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
 
-    Menu::Menu()
+    Menu::Menu(Audio* parent)
     : wxMenuBar()
 {
+    this->parent = parent;
     file = new wxMenu;
     help = new wxMenu;
-    file->Append(wxID_OPEN, wxT("&Open File(s)"));
-    file->Append(wxID_EXIT, wxT("&Quit"));
+    int ID_Open_Files = wxNewId();
     int ID_Check_for_Updates = wxNewId();
     int ID_Documentation = wxNewId();
     int ID_Release_Notes = wxNewId();
+    file->Append(wxID_OPEN, wxT("&Open File"));
+    file->Append(ID_Open_Files, wxT("&Open Files"));
+    file->Append(wxID_EXIT, wxT("&Quit"));
     help->Append(ID_Documentation, wxT("&Documentation"));
     help->Append(ID_Release_Notes, wxT("&Release Notes"));
     help->Append(ID_Check_for_Updates, wxT("&Check for Updates..."));
     help->Append(wxID_ABOUT, wxT("&About"));
     Append(file, wxT("&File"));
     Append(help, wxT("&Help"));
+    Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onOpenFile));
+    Connect(ID_Open_Files, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onOpenFiles));
     Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onQuit));
     Connect(ID_Release_Notes, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onReleaseNotes));
     Connect(ID_Documentation, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onDocumentation));
@@ -40,11 +45,51 @@ wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
 }
 
 /**
+ * @brief Destructor
+ */
+Menu::~Menu()
+{
+}
+
+/**
+ * @brief Open audio file event
+ * @param evt
+ * @return (void)
+ */
+void Menu::onOpenFile(wxCommandEvent& WXUNUSED(evt))
+{
+    wxFileDialog openFileDialog(this, _("Open audio file"), "", "", "mp3 files (*.mp3)|*.mp3",
+                                wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    if (openFileDialog.ShowModal() == wxID_CANCEL)
+        return; // the user changed idea...
+
+    std::string path = (std::string)openFileDialog.GetPath();
+    parent->loadFile(path, true);
+}
+/**
+ * @brief Open audio files event
+ * @param evt
+ * @return (void)
+ */
+void Menu::onOpenFiles(wxCommandEvent& WXUNUSED(evt))
+{
+    wxFileDialog openFileDialog(this, _("Open audio files"), "", "", "mp3 files (*.mp3)|*.mp3",
+                                wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
+    if (openFileDialog.ShowModal() == wxID_CANCEL)
+        return; // the user changed idea...
+
+    wxArrayString paths;
+    openFileDialog.GetPaths(paths);
+    for (wxString path : paths)
+        parent->loadFile((std::string)path, false);
+}
+
+/**
  * @brief On quit event
  * @param evt
  * @return (void)
  */
-void Menu::onQuit(wxCommandEvent& evt)
+void Menu::onQuit(wxCommandEvent& WXUNUSED(evt))
 {
     this->m_parent->Close(true);
 }
@@ -54,7 +99,7 @@ void Menu::onQuit(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Menu::onAbout(wxCommandEvent& evt)
+void Menu::onAbout(wxCommandEvent& WXUNUSED(evt))
 {
     openWebLink(std::string("https://github.com/Asiern/Audio"));
 }
@@ -64,7 +109,7 @@ void Menu::onAbout(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Menu::onCheckForUpdates(wxCommandEvent& evt)
+void Menu::onCheckForUpdates(wxCommandEvent& WXUNUSED(evt))
 {
     // Request Headers
     struct curl_slist* headers = NULL;
@@ -95,7 +140,7 @@ void Menu::onCheckForUpdates(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Menu::onDocumentation(wxCommandEvent& evt)
+void Menu::onDocumentation(wxCommandEvent& WXUNUSED(evt))
 {
     openWebLink("https://asiern.github.io/Audio/");
 }
@@ -105,7 +150,7 @@ void Menu::onDocumentation(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Menu::onReleaseNotes(wxCommandEvent& evt)
+void Menu::onReleaseNotes(wxCommandEvent& WXUNUSED(evt))
 {
     openWebLink("https://github.com/Asiern/Audio/blob/master/CHANGELOG.md");
 }

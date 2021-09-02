@@ -24,14 +24,14 @@ wxBEGIN_EVENT_TABLE(Audio, wxFrame) wxEND_EVENT_TABLE()
     : wxFrame(NULL, wxID_ANY, "Audio", wxDefaultPosition, wxSize(800, 500))
 {
     // Menu Bar
-    menuBar = new Menu;
+    menuBar = new Menu(this);
     SetMenuBar(menuBar);
+    fileList = new wxArrayString();
     fileslbl =
         new wxStaticText(this, wxID_ANY, "Files", wxPoint(20, 25), wxSize(80, 30), wxALIGN_LEFT, wxStaticTextNameStr);
-    filesListBox = new wxListCtrl(this, wxID_ANY, wxPoint(20, 50), wxSize(380, 200), wxLC_SINGLE_SEL | wxLC_LIST,
-                                  wxDefaultValidator, wxListCtrlNameStr);
+    filesListBox = new wxListBox(this, wxID_ANY, wxPoint(20, 50), wxSize(380, 280), *fileList,
+                                 wxLB_SINGLE | wxLB_NEEDED_SB, wxDefaultValidator, wxListBoxNameStr);
 
-    Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Audio::onloadBtnPress));
     cover = new wxImage();
     this->playBtn = new wxButton(this, wxID_ANY, "Play", wxPoint(200, 360), wxSize(120, 30), 0, wxDefaultValidator,
                                  wxButtonNameStr);
@@ -82,6 +82,7 @@ wxBEGIN_EVENT_TABLE(Audio, wxFrame) wxEND_EVENT_TABLE()
                              wxDefaultValidator, wxComboBoxNameStr);
     pitchcb->SetSelection(8);
     controller = new AudioController(-1, 44100);
+    files = new std::map<std::string, std::string>();
 }
 
 /**
@@ -89,25 +90,29 @@ wxBEGIN_EVENT_TABLE(Audio, wxFrame) wxEND_EVENT_TABLE()
  */
 Audio::~Audio()
 {
+    delete fileList;
     delete pitchChoices;
 }
 
 /**
- * @brief Load file event
- * @param evt
+ * @brief load filename and path to map
+ * @param path file path
+ * @param clear if TRUE clear previous file data, if FALSE do nothing
  * @return (void)
  */
-void Audio::onloadBtnPress(wxCommandEvent& evt)
+void Audio::loadFile(const std::string& path, BOOL clear)
 {
-    wxFileDialog openFileDialog(this, _("Open audio file"), "", "", "mp3 files (*.mp3)|*.mp3",
-                                wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-    if (openFileDialog.ShowModal() == wxID_CANCEL)
-        return; // the user changed idea...
-
-    std::string path = (std::string)openFileDialog.GetPath();
+    if (clear)
+    {
+        delete files;
+        files = new std::map<std::string, std::string>();
+        delete fileList;
+        fileList = new wxArrayString();
+    }
     std::string filename = getFileName(path);
-    filesListBox->InsertItem(0, filename);
-    files = new std::map<std::string, std::string>();
+    fileList->push_back(filename);
+    filesListBox->Clear();
+    filesListBox->Insert(*fileList, 0);
     files->insert(std::pair<std::string, std::string>(path, filename));
 }
 
@@ -116,7 +121,7 @@ void Audio::onloadBtnPress(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Audio::onpauseBtnPress(wxCommandEvent& evt)
+void Audio::onpauseBtnPress(wxCommandEvent& WXUNUSED(evt))
 {
     controller->PauseStream();
 }
@@ -126,12 +131,15 @@ void Audio::onpauseBtnPress(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Audio::onplayBtnPress(wxCommandEvent& evt)
+void Audio::onplayBtnPress(wxCommandEvent& WXUNUSED(evt))
 {
     if (controller->getStreamStatus())
         controller->ResumeStream();
     else
-        controller->PlayStream(getPath("Symphony No.6 (1st movement)"));
+    {
+        std::string selection = std::string(fileList->Item(filesListBox->GetSelection()).mb_str());
+        controller->PlayStream(getPath(selection));
+    }
 }
 
 /**
@@ -139,7 +147,7 @@ void Audio::onplayBtnPress(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Audio::onstopBtnPress(wxCommandEvent& evt)
+void Audio::onstopBtnPress(wxCommandEvent& WXUNUSED(evt))
 {
     controller->StopStream();
 }
@@ -168,7 +176,7 @@ std::string Audio::getPath(const std::string& filename)
  * @param evt
  * @return (void)
  */
-void Audio::onPitchIncrease(wxCommandEvent& evt)
+void Audio::onPitchIncrease(wxCommandEvent& WXUNUSED(evt))
 {
     if (pitchcb->GetSelection() == 0)
         return;
@@ -191,7 +199,7 @@ void Audio::onPitchIncrease(wxCommandEvent& evt)
  * @param evt
  * @return (void)
  */
-void Audio::onPitchDecrease(wxCommandEvent& evt)
+void Audio::onPitchDecrease(wxCommandEvent& WXUNUSED(evt))
 {
     if (pitchcb->GetSelection() == pitchChoices->size() - 1)
         return;

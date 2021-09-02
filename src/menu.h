@@ -11,6 +11,7 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "audio.h"
 #include <wx/wx.h>
 
 /**
@@ -23,8 +24,11 @@ class Menu : public wxMenuBar
   private:
     wxMenu* file = nullptr;
     wxMenu* help = nullptr;
+    Audio* parent = nullptr;
 
   protected:
+    void onOpenFile(wxCommandEvent& evt);
+    void onOpenFiles(wxCommandEvent& evt);
     void onQuit(wxCommandEvent& evt);
     void onAbout(wxCommandEvent& evt);
     void onCheckForUpdates(wxCommandEvent& evt);
@@ -33,7 +37,8 @@ class Menu : public wxMenuBar
     wxDECLARE_EVENT_TABLE();
 
   public:
-    Menu();
+    Menu(Audio* parent);
+    ~Menu();
 };
 
 #endif

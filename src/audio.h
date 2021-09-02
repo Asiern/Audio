@@ -14,7 +14,6 @@
 #include "updater.h"
 #include <map>
 #include <wx/gauge.h>
-#include <wx/listctrl.h>
 #include <wx/wx.h>
 
 /**
@@ -41,8 +40,9 @@ class Audio : public wxFrame
     wxGauge* progress = nullptr;
 
     wxStaticText* fileslbl = nullptr;
-    wxListCtrl* filesListBox = nullptr;
+    wxListBox* filesListBox = nullptr;
     std::map<std::string, std::string>* files = nullptr;
+    wxArrayString* fileList = nullptr;
 
     // Audio Controls
     wxStaticText* pitchlbl = nullptr;
@@ -53,7 +53,6 @@ class Audio : public wxFrame
 
   protected:
     // Events
-    void onloadBtnPress(wxCommandEvent& evt);
     void onplayBtnPress(wxCommandEvent& evt);
     void onpauseBtnPress(wxCommandEvent& evt);
     void onstopBtnPress(wxCommandEvent& evt);
@@ -64,6 +63,7 @@ class Audio : public wxFrame
   public:
     Audio();
     ~Audio();
+    void loadFile(const std::string& path, BOOL clear);
 };
 
 #endif
