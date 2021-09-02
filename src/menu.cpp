@@ -10,10 +10,10 @@
 
 #include "menu.h"
 
-#include <curl/curl.h>
-
 #include "updater.h"
 #include "utils.h"
+#include <curl/curl.h>
+#include <wx/aboutdlg.h>
 wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
 
     Menu::Menu(Audio* parent)
@@ -101,7 +101,23 @@ void Menu::onQuit(wxCommandEvent& WXUNUSED(evt))
  */
 void Menu::onAbout(wxCommandEvent& WXUNUSED(evt))
 {
-    openWebLink(std::string("https://github.com/Asiern/Audio"));
+    wxAboutDialogInfo info;
+
+    // About
+    info.SetName(_("Audio"));
+    info.SetVersion(_("1.0.0"));
+    info.SetWebSite(_("https://asiern.github.io/Audio/"));
+
+    // Credits
+    wxArrayString developers = wxArrayString();
+    developers.Add("Asiern", 1);
+    info.SetDevelopers(developers);
+
+    // License
+    info.SetLicence(_("MIT"));
+
+    // Show About
+    wxAboutBox(info);
 }
 
 /**
