@@ -109,6 +109,7 @@ void Audio::loadFile(const std::string& path, BOOL clear)
         delete fileList;
         fileList = new wxArrayString();
     }
+
     std::string filename = getFileName(path);
     fileList->push_back(filename);
     filesListBox->Clear();
@@ -137,8 +138,19 @@ void Audio::onplayBtnPress(wxCommandEvent& WXUNUSED(evt))
         controller->ResumeStream();
     else
     {
-        std::string selection = std::string(fileList->Item(filesListBox->GetSelection()).mb_str());
-        controller->PlayStream(getPath(selection));
+        // If no files loaded
+        if (fileList->size() == 0)
+        {
+            wxMessageBox("No file(s) found");
+            return;
+        }
+
+        // If nothing selected
+        if (filesListBox->GetSelection() == -1)
+            filesListBox->SetSelection(0); // Select first item
+
+        std::string selection = std::string(fileList->Item(filesListBox->GetSelection()).mb_str()); // Get Selection
+        controller->PlayStream(getPath(selection));                                                 // Play Stream
     }
 }
 
