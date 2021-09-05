@@ -106,7 +106,7 @@ endif()
 
 add_library(BASS_FX SHARED IMPORTED)
 if(WIN32)
-  set(BASS_FX_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/BASS_FX/C)
+  set(BASS_FX_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/BASS_FX/C)
   set(BASS_FX_LIBRARY ${CMAKE_SOURCE_DIR}/thirdparty/BASS_FX/C/x64/bass_fx.lib)
   include_directories(${BASS_FX_INCLUDE_DIR})
   target_link_libraries(${PROJECT_NAME} ${BASS_FX_LIBRARY})
