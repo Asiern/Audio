@@ -113,5 +113,26 @@ else()
   target_link_libraries(${PROJECT_NAME} BASS_FX)
 endif()
 
+###########   BASS ENC   ###########
+
+add_library(BASS_ENC SHARED IMPORTED)
+if(WIN32)
+  # TODO
+else()
+  set_target_properties(BASS_ENC PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/BASS/x64/libbassenc.so)
+  target_include_directories(BASS_ENC INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty/BASS)
+  target_link_libraries(${PROJECT_NAME} BASS_ENC)
+endif()
+
+########### BASS ENC MP3 ###########
+
+add_library(BASS_ENC_MP3 SHARED IMPORTED)
+if(WIN32)
+  # TODO
+else()
+  set_target_properties(BASS_ENC_MP3 PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/thirdparty/BASS/x64/libbassenc_mp3.so)
+  target_include_directories(BASS_ENC_MP3 INTERFACE ${CMAKE_SOURCE_DIR}/thirdparty/BASS)
+  target_link_libraries(${PROJECT_NAME} BASS_ENC_MP3)
+endif()
 
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
