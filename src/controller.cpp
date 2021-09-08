@@ -20,7 +20,6 @@ AudioController::AudioController(int device, int freq)
 {
     this->device = device;
     this->freq = freq;
-    this->ShowError = ShowError;
 
     // BASS initialization
     if (!BASS_Init(device, freq, 0, 0, NULL))
@@ -36,7 +35,6 @@ AudioController::AudioController(int device, int freq)
  */
 AudioController::~AudioController()
 {
-    free(ShowError);
 }
 
 /**
@@ -159,7 +157,7 @@ int AudioController::DecreasePitch(int semitones)
 }
 
 /**
- * @brief
+ * @brief Set stream playback speed
  * @param speed
  * @return
  */
@@ -168,24 +166,46 @@ int AudioController::SetStreamSpeed(float speed)
     return 0;
 }
 
-// void CALLBACK GetBpmCallback(DWORD channel, float percent, void* user)
-// {
-//     std::cout << percent << std::endl;
-// }
-
 /**
  * @brief Get bpm from file
  * @param path File path
- * @param start Start detecting position in seconds
- * @param end End detecting position in seconds
+ * @param start Start detecting position in seconds, if -1 detecting position is set to 0:00
+ * @param end End detecting position in seconds, if -1 detecting position is set to file end
  * @return Beats per minute
  */
 float AudioController::GetBpm(const std::string& path, double start, double end)
 {
     // Create decoding stream
     HSTREAM DecodingStream = BASS_StreamCreateFile(FALSE, path.c_str(), 0L, 0L, BASS_STREAM_DECODE);
+
+    // Get detection positions
+    double _start = start == -1 ? 0 : start;
+    double _end = end == -1 ? BASS_StreamGetFilePosition(DecodingStream, BASS_FILEPOS_END) : end;
+
     // Get bpm from decoding stream
-    float val = BASS_FX_BPM_DecodeGet(DecodingStream, start, end, MAKELONG(29, 200), BASS_FX_FREESOURCE, NULL, NULL);
-    BASS_FX_BPM_Free(DecodingStream); // Free mem
-    return val;
+    float val = BASS_FX_BPM_DecodeGet(DecodingStream, _start, _end, MAKELONG(29, 200), BASS_FX_FREESOURCE, NULL, NULL);
+    BASS_FX_BPM_Free(DecodingStream); // Free mem return val;
+}
+
+/**
+ * @brief Get stream progress
+ * @return If successful, stream position, else -1 is returned
+ */
+int AudioController::GetProgress()
+{
+    int current = BASS_StreamGetFilePosition(streamHandle, BASS_FILEPOS_CURRENT);
+    int end = BASS_StreamGetFilePosition(streamHandle, BASS_FILEPOS_END);
+    return current == -1 ? 0 : current * 100 / end;
+}
+
+/**
+ * @brief Get position that is to be decoded for playback
+ * @return playback position in seconds
+ */
+int AudioController::GetPosition()
+{
+    double s = BASS_ChannelSeconds2Bytes(streamHandle, BASS_ChannelGetLength(streamHandle, BASS_POS_BYTE));
+    int pos = BASS_StreamGetFilePosition(streamHandle, BASS_FILEPOS_CURRENT);
+    std::cout << "POS " << (int)s << std::endl;
+    return pos;
 }

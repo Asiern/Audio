@@ -33,12 +33,13 @@ class AudioController
     int DecreasePitch(int semitones);
     int SetStreamSpeed(float speed);
     float GetBpm(const std::string& path, double start, double end);
+    int GetProgress(void);
+    int GetPosition(void);
 
   private:
     int device;
     int freq;
     HSTREAM streamHandle;
-    void* ShowError;
     bool _PitchShift(float value);
 };
 #endif

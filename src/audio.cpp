@@ -48,7 +48,7 @@ wxBEGIN_EVENT_TABLE(Audio, wxFrame) wxEND_EVENT_TABLE()
         new wxStaticText(this, wxID_ANY, "4:07", wxPoint(650, 390), wxSize(80, 30), wxALIGN_LEFT, wxStaticTextNameStr);
     progress = new wxGauge(this, wxID_ANY, 100, wxPoint(200, 385), wxSize(430, 20), wxGA_HORIZONTAL, wxDefaultValidator,
                            wxGaugeNameStr);
-    progress->SetValue(50);
+    progress->SetValue(0);
     Centre();
 
     // Pitch controls
@@ -81,6 +81,11 @@ wxBEGIN_EVENT_TABLE(Audio, wxFrame) wxEND_EVENT_TABLE()
     pitchcb = new wxComboBox(this, wxID_ANY, "", wxPoint(560, 50), wxSize(120, 40), *pitchChoices, wxCB_READONLY,
                              wxDefaultValidator, wxComboBoxNameStr);
     pitchcb->SetSelection(8);
+
+    bpmbtn = new wxButton(this, wxID_ANY, "Get Bpm", wxPoint(500, 100), wxSize(100, 40), 0, wxDefaultValidator,
+                          wxButtonNameStr);
+    bpmbtn->Bind(wxEVT_BUTTON, &Audio::onbpmtBtnPress, this);
+
     controller = new AudioController(-1, 44100);
     files = new std::map<std::string, std::string>();
 }
@@ -94,6 +99,11 @@ Audio::~Audio()
     delete pitchChoices;
 }
 
+std::string Audio::getSelectedPath()
+{
+    std::string selection = std::string(fileList->Item(filesListBox->GetSelection()).mb_str());
+    return getPath(selection);
+}
 /**
  * @brief load filename and path to map
  * @param path file path
@@ -149,8 +159,7 @@ void Audio::onplayBtnPress(wxCommandEvent& WXUNUSED(evt))
         if (filesListBox->GetSelection() == -1)
             filesListBox->SetSelection(0); // Select first item
 
-        std::string selection = std::string(fileList->Item(filesListBox->GetSelection()).mb_str()); // Get Selection
-        controller->PlayStream(getPath(selection));                                                 // Play Stream
+        controller->PlayStream(getSelectedPath()); // Play Stream
     }
 }
 
@@ -227,4 +236,12 @@ void Audio::onPitchDecrease(wxCommandEvent& WXUNUSED(evt))
 
     // Update UI
     pitchcb->SetSelection(pitchcb->GetSelection() + 1);
+}
+
+void Audio::onbpmtBtnPress(wxCommandEvent& WXUNUSED(evt))
+{
+    float bpm = controller->GetBpm(getSelectedPath(), -1, -1);
+    bpmbtn->SetLabel(wxString::Format(wxT("%f"), bpm));
+    controller->GetPosition();
+    controller->GetProgress();
 }

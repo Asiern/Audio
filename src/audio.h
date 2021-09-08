@@ -49,7 +49,10 @@ class Audio : public wxFrame
     wxButton* incpitchbtn = nullptr;
     wxButton* decpitchbtn = nullptr;
     wxComboBox* pitchcb = nullptr;
-    wxArrayString* pitchChoices;
+    wxArrayString* pitchChoices = nullptr;
+    wxButton* bpmbtn = nullptr;
+
+    std::string getSelectedPath();
 
   protected:
     // Events
@@ -58,6 +61,7 @@ class Audio : public wxFrame
     void onstopBtnPress(wxCommandEvent& evt);
     void onPitchIncrease(wxCommandEvent& evt);
     void onPitchDecrease(wxCommandEvent& evt);
+    void onbpmtBtnPress(wxCommandEvent& evt);
     wxDECLARE_EVENT_TABLE();
 
   public:
