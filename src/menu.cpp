@@ -22,12 +22,10 @@ wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
     this->parent = parent;
     file = new wxMenu;
     help = new wxMenu;
-    int ID_Open_Files = wxNewId();
     int ID_Check_for_Updates = wxNewId();
     int ID_Documentation = wxNewId();
     int ID_Release_Notes = wxNewId();
-    file->Append(wxID_OPEN, wxT("&Open File"));
-    file->Append(ID_Open_Files, wxT("&Open Files"));
+    file->Append(wxID_OPEN, wxT("&Open File(s)"));
     file->Append(wxID_EXIT, wxT("&Quit"));
     help->Append(ID_Documentation, wxT("&Documentation"));
     help->Append(ID_Release_Notes, wxT("&Release Notes"));
@@ -35,8 +33,7 @@ wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
     help->Append(wxID_ABOUT, wxT("&About"));
     Append(file, wxT("&File"));
     Append(help, wxT("&Help"));
-    Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onOpenFile));
-    Connect(ID_Open_Files, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onOpenFiles));
+    Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onOpenFiles));
     Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onQuit));
     Connect(ID_Release_Notes, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onReleaseNotes));
     Connect(ID_Documentation, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Menu::onDocumentation));
@@ -49,22 +46,6 @@ wxBEGIN_EVENT_TABLE(Menu, wxMenuBar) wxEND_EVENT_TABLE()
  */
 Menu::~Menu()
 {
-}
-
-/**
- * @brief Open audio file event
- * @param evt
- * @return (void)
- */
-void Menu::onOpenFile(wxCommandEvent& WXUNUSED(evt))
-{
-    wxFileDialog openFileDialog(this, _("Open audio file"), "", "", "mp3 wav files (*.mp3;*.wav)|*.mp3;*.wav",
-                                wxFD_OPEN | wxFD_FILE_MUST_EXIST);
-    if (openFileDialog.ShowModal() == wxID_CANCEL)
-        return; // the user changed idea...
-
-    std::string path = (std::string)openFileDialog.GetPath();
-    parent->loadFile(path, true);
 }
 /**
  * @brief Open audio files event

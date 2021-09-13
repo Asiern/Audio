@@ -27,7 +27,6 @@ class Menu : public wxMenuBar
     Audio* parent = nullptr;
 
   protected:
-    void onOpenFile(wxCommandEvent& evt);
     void onOpenFiles(wxCommandEvent& evt);
     void onQuit(wxCommandEvent& evt);
     void onAbout(wxCommandEvent& evt);
